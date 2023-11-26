@@ -26,7 +26,7 @@ VFD_Display::~VFD_Display()
 void VFD_Display::initialize()
 {
     
-#ifdef VFD_ARDUINO
+#ifdef VFD_ARDUINO_UNO
 
     switch(params.drive_pin)
     {
@@ -68,12 +68,22 @@ void VFD_Display::initialize()
         break;
     }
 
+#endif
+
+#ifdef VFD_ESP
+    //Drive pin
+    ledcAttachPin(params.drive_pin, VFD_ESP_PWM_CHAN);
+    ledcChangeFrequency(VFD_ESP_PWM_CHAN,17000,8);
+    ledcWrite(VFD_ESP_PWM_CHAN,128);
+    
+#endif
+
     //Set digits. Not expected to change
     char cmd = VFD_CMD_DIGITS;
     cmd = cmd | VFD_DIGITS;
     send_raw_bytes(&cmd, 1);
 
-#endif
+
 }
 
 void VFD_Display::reset()
