@@ -22,7 +22,7 @@ void setup()
 void loop()
 {
     char scrollchars[13];
-    String str = "AAA!        AAAAAAA!                                 ABCDEE                                                               H ";
+    String str = "TESTING! HELLO WORLD!";
     static int scrollpos;
     for(int i=0;i<12;i++)
     {
