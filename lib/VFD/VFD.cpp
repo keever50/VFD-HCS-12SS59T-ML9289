@@ -2,6 +2,7 @@
 #include <Arduino.h>
 
 
+
 VFD_Display::VFD_Display( S_VFD_parameters parameters ) : params(parameters)
 {
     pinMode(params.clock_pin, OUTPUT);  
@@ -71,11 +72,15 @@ void VFD_Display::initialize()
 #endif
 
 #ifdef VFD_ESP
-    //Drive pin
     ledcAttachPin(params.drive_pin, VFD_ESP_PWM_CHAN);
-    ledcChangeFrequency(VFD_ESP_PWM_CHAN,17000,8);
+    ledcChangeFrequency(VFD_ESP_PWM_CHAN,VFD_DRIVE_FREQUENCY,8);
     ledcWrite(VFD_ESP_PWM_CHAN,128);
-    
+#endif
+
+#ifdef VFD_RP2040
+    pinMode(VFD_DRIVE_PIN, OUTPUT);
+    analogWriteFreq(VFD_DRIVE_FREQUENCY);
+    analogWrite(VFD_DRIVE_PIN, 127); // 50% duty cycle 
 #endif
 
     //Set digits. Not expected to change
