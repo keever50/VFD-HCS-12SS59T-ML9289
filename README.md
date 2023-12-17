@@ -8,3 +8,6 @@ It also provides the necessary communication with the integrated VFD driver chip
 This driver uses the bit banging method instead using SPI.
 The reason behind this is to send characters, you use a very few bytes. 
 Having an SPI bus available for other tasks out weights the pros of having SPI for the VFD.
+
+In order to achieve the clock pulse to drive the VFD drive pin, this driver makes use of timers. 
+In case of arduino uno, it can only use a few pins since timers are connected to specific pins.
